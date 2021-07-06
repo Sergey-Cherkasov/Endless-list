@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item.view.*
 import pt.svcdev.endlesslist.model.Child
 
-class MainListAdapter : PagingDataAdapter<Child, MainListAdapter.ViewHolder>(DataDifferntiator) {
+class MainListAdapter : PagingDataAdapter<Child, MainListAdapter.ViewHolder>(DataDifferentiator) {
     override fun onBindViewHolder(holder: MainListAdapter.ViewHolder, position: Int) {
-        holder.itemView.kind.text = getItem(position)?.kind
+        holder.itemView.title.text = getItem(position)?.data?.title
+        holder.itemView.selftext.text = getItem(position)?.data?.sefltext
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainListAdapter.ViewHolder =
@@ -23,9 +24,9 @@ class MainListAdapter : PagingDataAdapter<Child, MainListAdapter.ViewHolder>(Dat
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    object DataDifferntiator : DiffUtil.ItemCallback<Child>() {
+    object DataDifferentiator : DiffUtil.ItemCallback<Child>() {
         override fun areItemsTheSame(oldItem: Child, newItem: Child): Boolean {
-            return oldItem.kind == newItem.kind
+            return oldItem.data.title == newItem.data.title
         }
 
         override fun areContentsTheSame(oldItem: Child, newItem: Child): Boolean {
